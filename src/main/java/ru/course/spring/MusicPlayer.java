@@ -1,50 +1,29 @@
 package ru.course.spring;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+@Component
 public class MusicPlayer {
-    private List<Music> musicList = new ArrayList<>();
-
-    private String name;
-    private int volume;
-
-    public void setMusicList(List<Music> musicList) {
-        this.musicList = musicList;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getVolume() {
-        return volume;
-    }
-
-    public void setVolume(int volume) {
-        this.volume = volume;
-    }
-
+    private ClassicalMusic classicalMusic;
+    private RockMusic rockMusic;
+    private JazzMusic jazzMusic;
     // Инверсия управления
-//    public MusicPlayer(Music music){
-//       this.music=music;
-//   }
-//
-   public MusicPlayer(){}
-//
-//    public void setMusic(Music music){
-//        this.music=music;
-//    }
 
-    public void playMusic(){
+    @Autowired
+    public MusicPlayer(ClassicalMusic classicalMusic, RockMusic rockMusic, JazzMusic jazzMusic) {
+        this.classicalMusic = classicalMusic;
+        this.rockMusic = rockMusic;
+        this.jazzMusic = jazzMusic;
+    }
 
-            System.out.println("Playing: " + musicList);
+    public String playMusic() {
+        return "Playing: " + classicalMusic.getSong();
 
     }
 }
