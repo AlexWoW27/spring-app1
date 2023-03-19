@@ -1,29 +1,42 @@
 package ru.course.spring;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import org.springframework.beans.factory.annotation.Value;
 import java.util.List;
-import java.util.Objects;
+import java.util.Random;
 
-@Component
+
+
 public class MusicPlayer {
-    private ClassicalMusic classicalMusic;
-    private RockMusic rockMusic;
-    private JazzMusic jazzMusic;
-    // Инверсия управления
+    private List<Music> music;
 
-    @Autowired
-    public MusicPlayer(ClassicalMusic classicalMusic, RockMusic rockMusic, JazzMusic jazzMusic) {
-        this.classicalMusic = classicalMusic;
-        this.rockMusic = rockMusic;
-        this.jazzMusic = jazzMusic;
+    @Value("${musicPlayer.name}")
+    private String name;
+    @Value("${musicPlayer.volume}")
+    private  int volume;
+
+
+    public MusicPlayer(List<Music> music) {
+        this.music = music;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getVolume() {
+        return volume;
+    }
+
+    public void setVolume(int volume) {
+        this.volume = volume;
     }
 
     public String playMusic() {
-        return "Playing: " + classicalMusic.getSong();
+        Random random = new Random();
+        return "Playing: " + music.get(random.nextInt(music.size())).getSong();
 
     }
 }
